@@ -1,15 +1,18 @@
 #include "iostream"
 using namespace std;
 
+//Tạo struct node
 struct node 
 {
 	int data;
 	node *left;
 	node *right;	
 };
+// Tạo cây rỗng
 void TaoCay(node *&t){
 	t = NULL;
 }
+//Hàm thêm node vào cây
 void ThemNode(node *&t, int x){
 	if(t == NULL){
 		node *p = new node;
@@ -25,6 +28,7 @@ void ThemNode(node *&t, int x){
 		}
 	}
 }
+//Duyệt node trong cây theo Node-Left-Right
 void DuyetNLR(node *t){
 	if(t != NULL){
 		cout << t->data << " ";
@@ -32,7 +36,7 @@ void DuyetNLR(node *t){
 		DuyetNLR(t->right);
 	}
 }
-
+//Duyệt node trong cây theo Node-Right-Left
 void DuyetNRL(node *t){
 	if(t != NULL){
 		cout << t->data << " ";
@@ -40,7 +44,7 @@ void DuyetNRL(node *t){
 		DuyetNRL(t->left);
 	}
 }
-
+//Duyệt node trong cây theo Left-Node-Right
 void DuyetLNR(node *t){
 	if(t != NULL){
 		DuyetLNR(t->left);
@@ -48,7 +52,7 @@ void DuyetLNR(node *t){
 		DuyetLNR(t->right);
 	}
 }
-
+//Duyệt node trong cây theo Right-Node-Left
 void DuyetRNL(node *t){
 	if(t != NULL){
 		DuyetRNL(t->right);
@@ -56,7 +60,7 @@ void DuyetRNL(node *t){
 		DuyetRNL(t->left);
 	}
 }
-
+//Duyệt node trong cây theo Left-Right-Node
 void DuyetLRN(node *t){
 	if(t!= NULL){
 		DuyetLRN(t->left);
@@ -64,7 +68,7 @@ void DuyetLRN(node *t){
 		cout << t->data << " ";
 	}
 }
-
+//Duyệt node trong cây theo Right-Left-Node
 void DuyetRLN(node *t){
 	if(t != nullptr){
 		DuyetRLN(t->right);
