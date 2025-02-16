@@ -45,7 +45,7 @@ public:
     string dec_to_bin(int decimal){
         string answer = "";
         while(decimal != 0){
-            answer = (char)((decimal % 2) + '0') + answer;
+            answer = (char)((decimal % 2) + '0') + answer; // ghép phần dư vào trước kết quả -> dảo ngược
             decimal /= 2;
         }
         return answer;
@@ -56,7 +56,7 @@ public:
         int modify_num = input;
         while(modify_num != 0){
             int get_num = modify_num % 10;
-            temp_num = (temp_num * 10) + get_num;
+            temp_num = (temp_num * 10) + get_num; // ex: 1 * 10 = 10, 10 + 2 = 12 
             modify_num /= 10;
         }
         return temp_num == input; // true = palindrome
