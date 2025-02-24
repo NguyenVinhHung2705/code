@@ -128,7 +128,15 @@ public:
     }
 
     // bai 13 : to hop chap k cua n c(n,k)
-    int C(int n, int k);
+    int C(int n, int k){
+        if(n == k || k == 0){
+            return 1;
+        }
+        if(k > n){
+            return 0;
+        }
+        return C(n-1,k) + C(n-1,k-1);
+    }
 };
 
 
@@ -153,6 +161,7 @@ int main(){
     cout << solution.max_divisor(3,3) << '\n';
     cout << solution.first_digit(421) << '\n';
     cout << solution.string_length(" hel lo Worl d1 ") << '\n';
+    cout << solution.C(9,4);
 	
 }
 
