@@ -12,23 +12,45 @@
 #include "ctime"
 using namespace std;
 // LAB_5 ARRAY
-int get_interger_length(int input){
-    int count = 0;
-    while(input != 0){
-        count++;
-        input /= 10;
+void sieveEratosthenes(vector<bool>& prime, int n){
+    prime[0] = false; prime[1] = false;
+    for(int i = 2;i*i<=n;i++){
+        if(prime[i] == true){
+            for(int j = i * i;j<=n;j+=i){
+                prime[j] = false;
+            }    
+        }
     }
-    return count;
 }
-void change_value_of_an_array_with_interger_digit(int array_from_interger[], int array_size, int input){
+
+void findPrime(int arr[], int n, vector<bool>& prime){
+    int count = 0;
+    for(int i = 0;i<n;i++){
+        if(arr[i] > 1 && prime[arr[i]]){
+            cout << arr[i] << " ";
+            ++count;
+        }
+    }
+    if(count == 0){ 
+        cout << "khong co so nguyen to\n";
+    }
+    cout << '\n';
+}
+
+int get_integer_length(int input){
+    return log10(input) + 1;
+}
+
+void Solve(int array_from_integer[], int array_size, int input){
     for(int i = 0;i<array_size;i++){
-        array_from_interger[i] = input % 10;
+        array_from_integer[i] = input % 10;
         input /= 10;
     }
 }
 
-void Swap(int& a, int& b){
-    int temp = a;
+template <typename T>
+void Swap(T& a, T& b){
+    T temp = a;
     a = b;
     b = temp;
 }
@@ -41,9 +63,11 @@ void insert_element_increasing_order(int static_array[], int begin_index){
     }
     static_array[begin_index] = pivot;
 }
+
 int get_random_num(){   
-    return (rand() % 100) - (rand() % 100);
+    return rand() % 301 - 100;
 }
+
 void sort_static_array_increasing_order(int static_array[], int array_size){
     int loop_size = array_size;
     for(int i = 0;i<loop_size;i++){
@@ -55,141 +79,223 @@ void sort_static_array_increasing_order(int static_array[], int array_size){
     }
 }
 
+void Print(int arr[],int n){
+    for(int i = 0;i<n;i++){
+        cout << arr[i] << " ";
+    }
+    cout << '\n';
+}
+
+void getValueIncreasing(int arr[],int n, string isRandom = "none"){
+    if(isRandom == "none"){
+        int x;
+        for(int i = 0;i<n;i++){
+            cin >> x;
+            arr[i] = x;
+            insert_element_increasing_order(arr, i);
+        }
+    }else if(isRandom == "random"){
+        for(int i = 0;i<n;i++){
+            arr[i] = get_random_num(); // get_random_number
+            insert_element_increasing_order(arr, i);
+        }
+    }   
+}
+
+void getValue(int arr[],int n, string isRandom = "none"){
+    if(isRandom == "none"){
+        int x;
+        for(int i = 0;i<n;i++){
+            cin >> x;
+            arr[i] = x;
+        }
+    }else if(isRandom == "random"){
+        for(int i = 0;i<n;i++){
+            arr[i] = get_random_num();
+        }
+    }
+}
+
+// bai 3 func
+void PrintZeroNegaPosi(int arr[], int n){
+    for(int i = 0;i<n;i++){
+        if(arr[i] == 0){
+            cout << arr[i] << " ";
+        }
+    }
+    for(int i = 0;i<n;i++){
+        if(arr[i] < 0){
+            cout << arr[i] << " ";
+        }
+    }
+    for(int i = 0;i<n;i++){
+        if(arr[i] > 0){
+            cout << arr[i] << " ";
+        }
+    }
+    cout << '\n';
+}
+
+void PrintEvenOddZero(int arr[], int n){
+    for(int i = 0;i<n;i++){
+        if(arr[i] != 0 && arr[i] % 2  == 0){
+            cout << arr[i] << " ";
+        }
+    }
+    for(int i = 0;i<n;i++){
+        if(arr[i] % 2  != 0){
+            cout << arr[i] << " ";
+        }
+    }
+    for(int i = 0;i<n;i++){
+        if(arr[i] == 0){
+            cout << arr[i] << " ";
+        }
+    }
+    cout << '\n';
+}
+
+//bai 4 func
+void findNegative(int arr[], int n){
+    int count = 0;
+    for(int i = 0;i<n;i++){
+        if(arr[i] < 0){
+            cout << arr[i] << " ";
+            ++count;
+        }
+    }
+    if(count == 0){
+        cout << "khong co so thoa man";
+    }
+    cout << '\n';
+}
+
+void findPositive(int arr[],int n){
+    int count = 0;
+    for(int i = 0;i<n;i++){
+        if(arr[i] >= 0){
+            cout << arr[i] << " ";
+            ++count;
+        }
+    }
+    if(count == 0){
+        cout << "khong co so thoa man";
+    }
+    cout << '\n';
+}
+
+int biggestNum(int arr[],int n){
+    int maxNum = arr[0];
+    for(int i = 1;i<n;i++){
+        if(maxNum < arr[i]){
+            maxNum = arr[i];
+        }
+    }
+    return maxNum;
+}
+
+void deleteElement(int arr[], int& n, int k){
+    if(k > n || k <= 0){
+        return;
+    }
+    for(int i = k;i<n;i++){
+        arr[i-1] = arr[i];
+    }
+    n--;
+}
+
+void deleteDuplicate(int arr[], int& n){
+    sort_static_array_increasing_order(arr,n);
+    int index = 0;
+    for (int i = 0; i < n; i++) {
+        if (i == 0 || arr[i] != arr[i - 1]) {
+            arr[index++] = arr[i];
+        }
+    }
+    n = index;
+}
+
+void negaZeroPosi(int arr[],int n){
+     int left = 0, mid = 0, right = n - 1;
+
+    while (mid <= right) {
+        if (arr[mid] < 0) {  // Nếu số âm, đổi chỗ với phần đầu
+            swap(arr[left], arr[mid]);
+            left++;
+            mid++;
+        }
+        else if (arr[mid] == 0) { // Nếu là số 0, bỏ qua
+            mid++;
+        }
+        else { // Nếu là số dương, đổi chỗ với phần cuối
+            swap(arr[mid], arr[right]);
+            right--;
+        }
+    }
+}
 int main(){
-    // #ifndef ONLINE_JUDGE
-    // freopen("input.txt","r",stdin);
-    // freopen("output.txt", "w",stdout);
-    // ios::sync_with_stdio(0);
-    // cin.tie(0);
-    // #endif
+   #ifndef ONLINE_JUDGE
+   freopen("input.txt", "r",stdin);
+   freopen("output.txt", "w",stdout);
+   ios::sync_with_stdio(0);
+   cin.tie(0);
+   #endif
+
     // bai 1 : create static array
     srand(time(0));
     int n;
-    cout << "Nhap kich thuoc static array: ";cin >> n;
-    int static_array[n] = {0};
-    for(int i = 0;i<n;i++){
-        static_array[i] = get_random_num(); // get_random_number
-        insert_element_increasing_order(static_array, i); // insert element
-    }
-    for(auto const& num : static_array){ // for each (range based for loop)
-        cout << num << " ";
-    }
-    // bai 1 : create dynamic array
-    cout << '\n'; cout << "Nhap kich thuoc dynamic array: ";cin >> n; 
-    int *dynamic_array = new int[n]; // dynamic memory allocation
-    for(int i = 0;i<n;i++){
-        dynamic_array[i] = get_random_num();
-    }
-    for(int i = 0;i<n;i++){
-        cout << dynamic_array[i] << " ";
-    }
-    cout << '\n';
-    delete dynamic_array;
+    cin >> n;
+    // int static_array[n] = {0};
+    // getValueIncreasing(static_array,n);
+    // Print(static_array,n);
+
+    // bai 1 : create dynamic array 
+    // int *dynamic_array = new int[n];
+    // getValue(dynamic_array,n);
+    // Print(dynamic_array,n);
+    // delete[] dynamic_array;
+
+
     // bai 2 : tao mang so nguyen tu so nguyen
-    int input; cout << "Nhap so nguyen: ";cin >> input;
-    int array_size = get_interger_length(input);
-    int array_from_interger[array_size] = {0};
-    change_value_of_an_array_with_interger_digit(array_from_interger,array_size,input);
-    for(auto const& num : array_from_interger){
-        cout << num << " ";
-    }
-    // bai 3 : even -> odd -> zero
-    cout << '\n'; cout << "Nhap kich thuoc mang: ";cin >> n; // n da duoc declare
-    int even_odd_zero[n];
-    queue<int> even_nums;
-    queue<int> odd_nums;
-    cout << '\n';
-    for(int i = 0;i<n;i++){
-        even_odd_zero[i] = get_random_num();
-        if(even_odd_zero[i] % 2 == 0 && even_odd_zero[i] != 0){
-            even_nums.push(even_odd_zero[i]);
-        }else if(even_odd_zero[i] % 2 != 0 && even_odd_zero[i] != 0){
-            odd_nums.push(even_odd_zero[i]);
-        }
-    }
+    // int input;
+    // cin >> input;
+    // int array_size = get_integer_length(input);
+    // int array_from_integer[array_size] = {0};
+    // Solve(array_from_integer,array_size,input);
+    // Print(array_from_integer,array_size);
 
-    // normal travel
-    cout << "In binh thuong: ";
-    for(auto const& num : even_odd_zero){
-        cout << num << " ";
-    }
-    // even -> odd -> zero travel
-    cout << '\n';
-    cout << "In chan le 0: ";
-    for(int i = 0;i<n;i++){
-        if(!even_nums.empty()){
-            cout << even_nums.front() << " ";
-            even_nums.pop();
-        }else if(!odd_nums.empty()){
-            cout << odd_nums.front() << " ";
-            odd_nums.pop();
-        }else{
-            cout << 0 << " ";
-        }
-    }
+    //bai 3 : even -> odd -> zero
+   // int Bai3[n];
+   // getValue(Bai3,n);
+   // Print(Bai3,n);
+   // PrintEvenOddZero(Bai3,n);
+   // PrintZeroNegaPosi(Bai3,n);
 
-    // bai 3 : zero -> negative -> positive
-    cout << '\n' << "Nhap kich thuoc mang: ";cin >> n; // n da duoc declare
-    int zero_nega_posi[n];
-    queue<int> negative_nums;
-    queue<int> positive_nums;
-    cout << '\n';
-    for(int i = 0;i<n;i++){
-        zero_nega_posi[i] = get_random_num();
-        if(zero_nega_posi[i] < 0 && zero_nega_posi[i] != 0){
-            negative_nums.push(zero_nega_posi[i]);
-        }else if(zero_nega_posi[i] > 0 && zero_nega_posi[i] != 0){
-            positive_nums.push(zero_nega_posi[i]);
-        }
-    }
+    // bai 4 : tim kiem theo dieu kien    
+    // int bai4[n];
+    // getValue(bai4,n,"random");
+    // Print(bai4,n);
+    // findNegative(bai4,n); // - tim so am
+    // int big = biggestNum(bai4,n); // tim so lon nhat
+    // cout << "So lon nhat: " << big << '\n';
+    // findPositive(bai4,n); // tim so nguyen duong    
+    // vector<bool> prime(1000,true);   
+    // sieveEratosthenes(prime, 1000);   
+    // findPrime(bai4,n,prime);
+    
+    // bai 5:
+    // int bai5[n];
+    // int k; cin >> k;
+    // getValue(bai5,n,"random");
+    // Print(bai5,n);
+    // deleteDuplicate(bai5,n);
+    // Print(bai5,n);
 
-    // normal travel
-    cout << '\n' << "In theo kieu binh thuong: ";
-    for(auto const& num : zero_nega_posi){
-        cout << num << " ";
-    }
-    // zero -> nega -> posi
-    cout << '\n' << "In theo 0 am duong: ";
-    int count_zero = n - (negative_nums.size() + positive_nums.size());
-    for(int i = 0;i<count_zero;i++){
-        cout << 0 << " ";
-    }
-    for(int i = count_zero;i<n;i++){
-        if(!negative_nums.empty()){
-            cout << negative_nums.front() << " ";
-            negative_nums.pop();
-        }else{
-            cout << positive_nums.front() << " ";
-            positive_nums.pop();
-        }
-    }
+    // bai 6:
+    int bai6[n];
+    getValue(bai6,n,"random");
+    Print(bai6,n);
+    negaZeroPosi(bai6,10);
+    Print(bai6,n);
     
 }
-
-
-
-/*
-1. Tạo mảng số nguyên
-- Có số phần tử xác định - DONE
-- Mảng động, xài bao nhiêu tạo bấy nhiêu (tham khảo tr302, sách Quách Tuấn
-Ngọc) - DONE
-2. Nhập dữ liệu (mảng tĩnh)
-- Nhập mảng từ bàn phím - DONE
-- Tạo mảng bằng cách lấy số ngẫu nhiên - DONE
-- Nhập mảng, sau khi nhập xong, mảng đã được sắp xếp tăng dần. - DONE
-- Tạo mảng từ dãy số nguyên. Vd: Nhập số: 5963, tách số tạo mảng a[3;6;9;5] - DONE
-3. In mảng - duyệt mảng (mảng tĩnh)
-- in theo thứ tự bình thường - DONE
-- in các số chẵn -> lẻ -> các số bằng 0 - DONE
-- in số 0 --> âm -> dương - DONE
-
-4. Với mảng tĩnh, tìm kiếm theo điều kiện: Tìm tất cả số
-âm, tìm số lớn nhất, tìm số chẵn, tìm số nguyên tố
-5. Chèn, xóa phần tử trong mảng
-- Xóa tại vị trí thứ k
-- Tỉa bớt phần tử giống nhau, chỉ giữ lại 1 phần tử đại
-diện.
-
-6. Chuyển các phần tử >0 về cuối mảng, <0 về đầu
-mảng, =0 về giữa mảng
-*/
