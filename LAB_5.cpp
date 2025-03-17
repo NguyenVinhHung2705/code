@@ -65,8 +65,16 @@ void insert_element_increasing_order(int static_array[], int begin_index){
 }
 
 int get_random_num(){   
-    return rand() % 301 - 100;
+    
+    return rand() % 300 - 100;
 }
+
+int get_random_num1(int a, int b){   
+    srand(time(0));
+    return rand() % (b-a+1) + a;
+}
+
+
 
 void sort_static_array_increasing_order(int static_array[], int array_size){
     int loop_size = array_size;
@@ -215,19 +223,25 @@ void deleteDuplicate(int arr[], int& n){
     n = index;
 }
 
+void deleteArray(int &n){
+    n=0;
+}
+
+void deleteZero(int arr[],int& n);
+
 void negaZeroPosi(int arr[],int n){
      int left = 0, mid = 0, right = n - 1;
 
     while (mid <= right) {
-        if (arr[mid] < 0) {  // Nếu số âm, đổi chỗ với phần đầu
+        if (arr[mid] < 0) {
             swap(arr[left], arr[mid]);
             left++;
             mid++;
         }
-        else if (arr[mid] == 0) { // Nếu là số 0, bỏ qua
+        else if (arr[mid] == 0) {
             mid++;
         }
-        else { // Nếu là số dương, đổi chỗ với phần cuối
+        else {
             swap(arr[mid], arr[right]);
             right--;
         }
@@ -243,8 +257,8 @@ int main(){
 
     // bai 1 : create static array
     srand(time(0));
-    int n;
-    cin >> n;
+    // int n;
+    // cin >> n;
     // int static_array[n] = {0};
     // getValueIncreasing(static_array,n);
     // Print(static_array,n);
@@ -292,10 +306,34 @@ int main(){
     // Print(bai5,n);
 
     // bai 6:
-    int bai6[n];
-    getValue(bai6,n,"random");
-    Print(bai6,n);
-    negaZeroPosi(bai6,10);
-    Print(bai6,n);
+    // int bai6[n];
+    // getValue(bai6,n,"random");
+    // Print(bai6,n);
+    // negaZeroPosi(bai6,10);
+    // Print(bai6,n);
+    int n = 10;
+   int arr[n] = {1,6,3,8,0,1,5,8,2,5};
+    deleteZero(arr,n);
+    for(int i = 0;i<n;i++){
+        cout << arr[i] << " ";
+    }
+
     
+}
+void deleteZero(int arr[], int &n) {
+    int left = 0;
+    int right = n-1;
+    while(left < right){
+        if(arr[left] != 0){
+            left++;
+        }
+        if(arr[right] == 0){
+            n--;
+            right--;
+        }
+        if(arr[left] == 0 && arr[right] != 0){
+
+            swap(arr[left],arr[right]);
+        }
+    }
 }
